@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+  <title>SpotDL Studio</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell" inert aria-hidden="true">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" role="presentation"><path d="M8 12.5c5.6-1.7 12.4-.8 16.5 1.7"/><path d="M9.5 17c4.4-1.3 9.5-.6 13 1.4"/><path d="M11 21.2c3-.8 6.4-.4 8.8 1.1"/></svg>
+        </div>
+        <div class="brand-copy"><strong>spotdl<span>studio</span></strong><small>LOCAL MEDIA ARCHIVE</small></div>
+      </div>
+
+      <div class="sidebar-section-label">WORKSPACE</div>
+      <button class="nav-item active" id="nav-new-download" type="button" aria-current="page">
+        <span class="nav-icon">↧</span><span>Archive task</span><span class="nav-dot"></span>
+      </button>
+      <button class="nav-item" id="open-folder-sidebar" type="button">
+        <span class="nav-icon">▣</span><span>Open output folder</span>
+      </button>
+      <button class="nav-item" id="nav-about" type="button">
+        <span class="nav-icon">ⓘ</span><span>About / Open-source licenses</span>
+      </button>
+
+      <div class="sidebar-bottom">
+        <div class="side-status-icon"><span class="pulse"></span></div>
+        <div class="side-status-copy"><strong id="sidebar-status">Checking setup</strong><small id="sidebar-version">Local download engine</small></div>
+        <span class="status-light" id="sidebar-light"></span>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div id="workspace-view">
+      <header class="topbar">
+        <div class="breadcrumb"><span>Workspace</span><span class="crumb-slash">/</span><strong>Archive task</strong></div>
+        <div class="topbar-right"><span class="privacy-lock">⌑</span><span>Runs locally on your Mac</span></div>
+      </header>
+
+      <section class="page-intro">
+        <div class="eyebrow"><span class="eyebrow-line"></span> LOCAL ARCHIVE WORKFLOW</div>
+        <h1>Your archive.<br><span>One simple flow.</span></h1>
+        <p class="intro-copy">Provide a supported source link, choose a destination, and manage the task locally on your Mac.</p>
+      </section>
+
+      <section class="setup-banner" id="setup-banner" aria-live="polite">
+        <div class="setup-banner-icon" id="setup-icon">↻</div>
+        <div class="setup-copy"><strong id="setup-title">Preparing SpotDL</strong><span id="setup-description">Checking your local setup. This happens inside the app — no Terminal window.</span></div>
+        <div class="setup-actions">
+          <button class="text-button hidden" id="retry-setup-button" type="button">Retry setup ↻</button>
+          <button class="text-button hidden" id="python-button" type="button">Install Python ↗</button>
+        </div>
+      </section>
+
+      <section class="workspace-grid">
+        <div class="primary-column">
+          <article class="panel source-panel">
+            <div class="panel-heading">
+              <div class="step-number">01</div>
+              <div><h2>Choose a source link</h2><p>Track, album, playlist, or artist metadata</p></div>
+              <div class="spotify-badge"><span class="spotify-glyph">≋</span> SPOTIFY</div>
+            </div>
+            <label class="field-label" for="spotify-url">SOURCE LINK</label>
+            <div class="url-input-wrap">
+              <span class="link-symbol">↗</span>
+              <input id="spotify-url" type="url" autocomplete="off" spellcheck="false" placeholder="https://open.spotify.com/playlist/…">
+              <button class="clear-input" id="clear-url" type="button" aria-label="Clear URL">×</button>
+            </div>
+            <div class="field-help"><span class="tiny-check">✓</span> Spotify links are used to read track metadata</div>
+            <div class="examples-row"><span>SUPPORTED LINKS</span><div class="example-chip">Track</div><div class="example-chip">Album</div><div class="example-chip">Playlist</div><div class="example-chip">Artist</div></div>
+          </article>
+
+          <article class="panel destination-panel">
+            <div class="panel-heading">
+              <div class="step-number">02</div>
+              <div><h2>Set your destination</h2><p>Choose where the audio files will be saved</p></div>
+            </div>
+            <div class="folder-picker-row">
+              <div class="folder-icon-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M3.5 9h17"/></svg></div>
+              <div class="folder-info"><strong id="folder-name">Music / SpotDL Downloads</strong><span id="folder-path">Your downloads folder</span></div>
+              <button class="secondary-button" id="choose-folder" type="button">Choose folder <span>↗</span></button>
+            </div>
+            <div class="format-row">
+              <div><label class="field-label" for="format-select">AUDIO FORMAT</label><p class="format-subtitle">Choose the output format</p></div>
+              <div class="select-wrap"><select id="format-select"><option value="mp3">MP3 · universal</option><option value="m4a">M4A</option><option value="opus">Opus</option><option value="ogg">OGG</option><option value="flac">FLAC</option><option value="wav">WAV</option></select><span class="select-chevron">⌄</span></div>
+            </div>
+          </article>
+
+          <div class="actions-row">
+            <div class="action-note"><span class="shield-icon">◇</span><span>Metadata and artwork are handled automatically</span></div>
+            <button class="primary-button" id="download-button" type="button" disabled><span class="button-icon">↳</span><span id="download-button-label">Process link</span><span class="button-arrow">↗</span></button>
+          </div>
+          <p class="legal-note">Only archive media you own or are authorized to access. SpotDL reads metadata and searches supported online sources; it does not download audio streams directly from Spotify.</p>
+        </div>
+
+        <aside class="secondary-column">
+          <article class="panel how-panel">
+            <div class="mini-panel-heading"><span class="sparkle-icon">✳</span><h3>How it works</h3></div>
+            <div class="flow-list">
+              <div class="flow-item"><div class="flow-icon spotify-flow">≋</div><div><strong>Read Spotify metadata</strong><p>Finds track details from your link.</p></div></div>
+              <div class="flow-connector"></div>
+              <div class="flow-item"><div class="flow-icon search-flow">⌕</div><div><strong>Match the audio</strong><p>Looks for a corresponding audio source.</p></div></div>
+              <div class="flow-connector"></div>
+              <div class="flow-item"><div class="flow-icon file-flow">♫</div><div><strong>Save your files</strong><p>Writes tagged audio to your chosen folder.</p></div></div>
+            </div>
+            <div class="local-callout"><span class="lock-outline">⌑</span><div><strong>No Terminal workflow</strong><p>SpotDL and its helpers are managed locally by this app.</p></div></div>
+          </article>
+
+          <article class="panel activity-panel">
+            <div class="activity-heading"><div><h3>Activity</h3><p id="activity-subtitle">Setup and download messages</p></div><span class="activity-live"><span></span> LIVE</span></div>
+            <div class="activity-list" id="activity-list" aria-live="polite" aria-relevant="additions text">
+              <div class="empty-activity"><div class="empty-activity-icon">⌁</div><strong>All quiet for now</strong><span>Setup and download progress will appear here.</span></div>
+            </div>
+            <div class="activity-footer"><span class="activity-footer-dot"></span><span id="activity-footer-text">Waiting for setup</span><button type="button" id="clear-activity" title="Clear activity" aria-label="Clear activity">↺</button></div>
+          </article>
+        </aside>
+      </section>
+
+      <footer class="app-footer"><span>SPOTDL STUDIO <span class="footer-sep">·</span> VERSION 1.1</span><span>Uses <button type="button" class="footer-link" id="spotdl-docs">SpotDL</button> <span class="footer-sep">·</span> Open-source components</span></footer>
+      </div>
+
+      <section class="about-view hidden" id="about-view" aria-labelledby="about-title">
+        <header class="topbar about-topbar">
+          <div class="breadcrumb"><span>Workspace</span><span class="crumb-slash">/</span><strong>About / Open-source licenses</strong></div>
+          <div class="topbar-right"><span class="privacy-lock">⌑</span><span>Local app · direct connections</span></div>
+        </header>
+        <div class="about-intro">
+          <div class="eyebrow"><span class="eyebrow-line"></span> TRANSPARENCY & ATTRIBUTION</div>
+          <h1 id="about-title">About this app.<br><span>And its components.</span></h1>
+          <p class="intro-copy">Third-party license texts, upstream references, and local dependency update status.</p>
+        </div>
+        <article class="panel about-overview">
+          <div class="about-overview-copy"><div class="mini-panel-heading"><span class="sparkle-icon">✳</span><h3>Local execution and network transparency</h3></div>
+            <p>SpotDL Studio runs the download engine on this Mac. It does not send Spotify URLs or media through a developer-operated proxy or download server. The app makes direct outbound requests from this device to GitHub for release checks, to Spotify-related endpoints for metadata, and to supported media providers for matching audio. Those services may receive your IP address and request information under their own policies.</p>
+            <p>Updates install official stable SpotDL and yt-dlp package releases into the app-managed Python environment. This is compatibility maintenance, not a mechanism for bypassing DRM, access controls, or a service's restrictions.</p>
+          </div>
+          <div class="update-manager">
+            <div><strong>Local dependency manager</strong><span id="update-status">Update status has not been checked yet.</span></div>
+            <button class="secondary-button" type="button" id="check-updates-button">Check now <span>↻</span></button>
+          </div>
+        </article>
+        <section class="license-browser" aria-label="Open source licenses">
+          <div class="license-browser-heading"><div><h2>Open Source Licenses</h2><p>Choose a component to read its license and source notice.</p></div><span class="license-count" id="license-count">5 notices</span></div>
+          <div class="license-layout">
+            <div class="license-select-list" id="license-list" role="listbox" aria-label="License component list"><div class="license-loading">Loading license texts…</div></div>
+            <article class="license-detail panel">
+              <div class="license-detail-heading"><div><h3 id="license-title">Select a component</h3><p id="license-note">Full license texts are displayed locally.</p></div><button class="text-button hidden" type="button" id="license-source-button">View upstream ↗</button></div>
+              <pre class="license-text" id="license-text">Select a component from the list to read its license text.</pre>
+            </article>
+          </div>
+        </section>
+        <div class="legal-footnote">License labels are informational. FFmpeg's applicable license depends on the exact binary configuration, and yt-dlp executables can contain additional components with different licenses. Verify the actual components and obligations before redistributing a build.</div>
+      </section>
+    </main>
+  </div>
+  <div class="agreement-screen" id="agreement-screen" role="dialog" aria-modal="true" aria-labelledby="agreement-title" aria-describedby="agreement-subtitle">
+    <section class="agreement-card">
+      <header class="agreement-header">
+        <div class="agreement-mark" aria-hidden="true">✓</div>
+        <div><div class="eyebrow"><span class="eyebrow-line"></span> FIRST-LAUNCH AGREEMENT</div><h1 id="agreement-title">Before you begin.<br><span>Review the terms.</span></h1><p id="agreement-subtitle">Please read the Terms of Service and Disclaimer. The app stays locked until you explicitly agree.</p></div>
+      </header>
+      <div class="agreement-scroll" tabindex="0">
+        <h2>Terms of Service</h2>
+        <p><strong>1. Intended use.</strong> SpotDL Studio is a local utility that coordinates open-source tools to read supported source metadata and create local audio archives. You may use it only for content you own or are legally authorized to access, save, and reproduce.</p>
+        <p><strong>2. Your responsibility.</strong> You are responsible for checking copyright, licences, permissions, privacy rights, and the applicable terms of Spotify and all other services you use. Do not use the app to bypass DRM, paywalls, access controls, rate limits, or other technical restrictions, or to obtain media without permission.</p>
+        <p><strong>3. Third-party services.</strong> SpotDL Studio is not affiliated with Spotify, SpotDL, yt-dlp, or FFmpeg. Link processing may contact third-party services directly from your device. Service availability, matching accuracy, rate limits, and rules are controlled by those third parties and may change at any time.</p>
+        <p><strong>4. Local processing and updates.</strong> The app runs its media tooling locally and does not operate a developer-hosted proxy or media cache. After you agree, it may contact GitHub to check official dependency releases and install stable versions into its app-managed environment. Ordinary updates do not grant permission to access content restricted by a provider.</p>
+        <p><strong>5. No guarantee.</strong> Source matching can be incorrect; audio quality, metadata, downloads, and compatibility are not guaranteed. Review the output before relying on it.</p>
+        <h2>Disclaimer</h2>
+        <p>The application and its third-party components are provided “as is” and “as available,” without warranties to the maximum extent permitted by applicable law. The authors do not provide legal advice and do not guarantee that any particular use is lawful in your jurisdiction. To the maximum extent allowed by law, you assume the risks of use and are responsible for your actions and resulting files. Nothing in these terms excludes rights or liabilities that cannot legally be excluded.</p>
+        <p><strong>No legal shield.</strong> Agreeing here records that you saw and accepted these terms in the app; it does not guarantee that the terms form an enforceable contract in every jurisdiction or excuse unlawful use.</p>
+      </div>
+      <label class="agreement-checkline" for="agreement-checkbox"><input id="agreement-checkbox" type="checkbox"><span>I agree that this is a local backup utility for archiving media I legally own or have permission to access. I assume full legal responsibility for its use.</span></label>
+      <div class="agreement-footer"><span id="agreement-footer-note">You must check the box to continue. No dependency setup begins before acceptance.</span><button class="primary-button" type="button" id="agreement-continue" disabled><span>Continue</span><span class="button-arrow">→</span></button></div>
+    </section>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
