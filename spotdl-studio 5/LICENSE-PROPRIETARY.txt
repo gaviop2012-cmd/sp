@@ -1,7 +1,0 @@
-SpotDL Studio — Application Code Notice
-
-Copyright (c) 2026 SpotDL Studio authors. All rights reserved.
-
-Unless a file or component is expressly identified as third-party software and covered by its own license, the original SpotDL Studio application code, layout, and branding are proprietary. No license to copy, modify, redistribute, sublicense, or commercially exploit those original materials is granted by receiving this source or application package. This notice does not change the rights granted by any third-party open-source license. Third-party components remain under their respective license terms; consult the About / Open Source Licenses screen and the licenses directory.
-
-Replace the copyright holder name if you choose a legal name or business name for distribution. This notice is not legal advice.
