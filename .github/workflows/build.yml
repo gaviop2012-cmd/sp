@@ -32,18 +32,24 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
+
+      - name: Check project files
+        run: |
+          node --version
+          npm --version
+          test -f package.json || exit 1
+        shell: bash
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --no-audit --no-fund
 
-      - name: Build installer
-        run: npm run pack:mac
+      - name: Build macOS installer
         if: runner.os == 'macOS'
+        run: npm run pack:mac
 
       - name: Build Windows installer
-        run: npm run pack:win
         if: runner.os == 'Windows'
+        run: npm run pack:win
 
       - name: Upload installer files
         uses: actions/upload-artifact@v4
@@ -51,17 +57,19 @@ jobs:
           name: SpotDL-Studio-${{ matrix.artifact }}
           path: release/*
           if-no-files-found: error
+          retention-days: 14
 
   release:
+    name: Publish release
     if: startsWith(github.ref, 'refs/tags/v')
     needs: build
     runs-on: ubuntu-latest
+
     steps:
-      - name: Download all installers
+      - name: Download installer artifacts
         uses: actions/download-artifact@v4
         with:
           path: installers
-          merge-multiple: false
 
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
